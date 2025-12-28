@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For My Jaan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Quicksand', sans-serif;
+            background-color: #fff5f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 400px;
+            width: 85%;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.4);
+            z-index: 10;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #d63384;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        #present-box {
+            font-size: 100px;
+            cursor: pointer;
+            margin: 20px 0;
+            display: inline-block;
+        }
+
+        .btn-group {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            min-height: 50px;
+        }
+        
+        button {
+            padding: 12px 25px;
+            font-size: 1rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        #yes-btn {
+            background: linear-gradient(45deg, #ff4da6, #ff85c0);
+            color: white;
+        }
+
+        #no-btn {
+            background-color: #bdc3c7; /* Grey color */
+            color: white;
+            transition: 0.1s ease;
+            touch-action: none;
+        }
+
+        #proposal-section, #future-section { display: none; }
+        .heart { position: absolute; color: #ffb6c1; animation: float 5s linear infinite; opacity: 0; z-index: 1; }
+        @keyframes float { 0% { transform: translateY(110vh); opacity: 1; } 100% { transform: translateY(-10vh); opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <div id="hearts-container"></div>
+
+    <div class="container">
+        <div id="gift-section">
+            <h1>Hey Anshika...</h1>
+            <p>I have a little surprise for you, Jaan.<br>Tap the gift to open it!</p>
+            <div id="present-box" onclick="openGift()">🎁</div>
+        </div>
+
+        <div id="proposal-section">
+            <h1>My Beautiful Jaan,</h1>
+            <p>Every moment with you is like a dream.</p>
+            <h2 style="color: #ff4da6;">Anshika, will you be my girlfriend?</h2>
+            <div class="btn-group" id="btnContainer">
+                <button id="yes-btn" onclick="showFuture()">YES!</button>
+                <button id="no-btn" onmouseover="moveNo()" ontouchstart="moveNo()">No</button>
+            </div>
+        </div>
+
+        <div id="future-section">
+            <h1>I'm the luckiest! ❤️</h1>
+            <p style="font-weight: bold; color: #d63384;">To our future, Anshika...</p>
+            <p>I promise to cherish every moment with you. You mean the world to me, Jaan!</p>
+            <div style="font-size: 40px;">♾️❤️🥂</div>
+        </div>
+    </div>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            document.getElementById('hearts-container').appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+        setInterval(createHeart, 400);
+
+        function openGift() {
+            document.getElementById('gift-section').style.display = 'none';
+            document.getElementById('proposal-section').style.display = 'block';
+        }
+
+        function moveNo() {
+            const noBtn = document.getElementById('no-btn');
+            
+            // On the first interaction, we switch it to 'fixed' so it can fly anywhere
+            noBtn.style.position = 'fixed';
+
+            const padding = 30;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        function showFuture() {
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            document.getElementById('proposal-section').style.display = 'none';
+            document.getElementById('future-section').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
